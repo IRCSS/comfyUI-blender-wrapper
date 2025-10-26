@@ -32,6 +32,9 @@ class BlenderGenericNode:
     CATEGORY = "Blender"
 
     def run_blender_task(self, blend_file, input_model, config_file, seed):
+        # ------------------------------------------
+        # Load global config (contains Blender path)
+        # ------------------------------------------
         cfg = load_config()
         blender_exe = cfg.get("blender_path", "")
         if not blender_exe or not os.path.exists(blender_exe):
@@ -42,11 +45,34 @@ class BlenderGenericNode:
         tmp_output_path = tmp_output.name
         tmp_output.close()
 
+        # ------------------------------------------
+        # Resolve relative paths to absolute paths
+        # ------------------------------------------
+        node_dir = os.path.dirname(__file__)
 
+        def resolve_path(path):
+            """Return an absolute path; if relative, make it relative to node_dir."""
+            if not path:
+                return ""
+            if os.path.isabs(path):
+                return os.path.normpath(path)
+            return os.path.normpath(os.path.join(node_dir, path))   
+
+
+        resolved_blend = resolve_path(blend_file)
+        resolved_config = resolve_path(config_file)
+            
+        # Log resolved paths (for debugging visibility)
+        print(f"[BlenderGenericNode] blend_file resolved to: {resolved_blend}")
+        print(f"[BlenderGenericNode] config_file resolved to: {resolved_config}")
+
+        # ------------------------------------------
+        # Prepare environment for Blender subprocess
+        # ------------------------------------------
         env = os.environ.copy()
-        env["BLEND_FILE"] = blend_file
+        env["BLEND_FILE"] = resolved_blend
         env["INPUT_MODEL"] = input_model
-        env["CONFIG_FILE"] = config_file
+        env["CONFIG_FILE"] = resolved_config
         env["OUTPUT_JSON"] = tmp_output_path 
 
         cmd = [blender_exe, "--background", "--python", WRAPPER_PATH]
