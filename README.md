@@ -9,7 +9,7 @@
   - imports input assets into Blender,
   - loads a `.blend` stage file,
   - executes scripts stored as **Text blocks** inside that `.blend`,
-  - exports outputs and returns results via JSON.
+  - returns results via JSON.
 - A **ComfyUI node** example showing how to call the wrapper.
 - Example stage `.blend` files (e.g., mesh cleanup, simple rig, etc.) you can copy and modify.
 - Some modifications to Kijai's Hunyuan wrapper, so that it plays nicely with my example of batch processing meshes (dealing with Windows Path issues and generations colliding with eachother in terms of file read write permissions)
