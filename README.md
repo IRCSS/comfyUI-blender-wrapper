@@ -68,7 +68,5 @@ You can also get a reference to output json and populate it like this:
 
 For how your json should look like have a look at the example. 
 
-*** I havent yet implemented importing of Geometry nodes, curves or other data type. If the script you are writting in your blend file is relying on node trees like geometry nodes or materials, textures, or specific data in the scene like curves or meshes, it won't work. You can very easily expand the wrapper to import all those type when appending the python script to the instance of Blender running.
-
 ## On the Example Provided
 The example provided is for generating 3D rigged characters. You can read the blog post for more info. I did modify Kijais wrapper to play nicely with very annoying windows issues. The changes are in the files ```ComfyUI-Hunyuan3DWrapper\nodes.py``` and ``ComfyUI-Hunyuan3DWrapper\hy3dgen\shapegen\postprocessors.py``. You will find both files included here, you can copy them over if you are hitting issues with permission for read and write. License wise all rights go to Kijai. 
